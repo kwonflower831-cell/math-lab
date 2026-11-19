@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>직관적 수학·지식 시각화 랩 (Intuitive Math Lab)</title>
+  <style>
+    :root {
+      --bg: #030712;
+      --card: rgba(15, 23, 42, 0.75);
+      --border: rgba(255, 255, 255, 0.1);
+      --primary: #38bdf8;
+      --primary-glow: rgba(56, 189, 248, 0.35);
+      --gold: #f59e0b;
+      --gold-glow: rgba(245, 158, 11, 0.35);
+      --emerald: #10b981;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --font-sans: -apple-system, BlinkMacSystemFont, "Pretendard", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(circle at 15% 15%, rgba(56, 189, 248, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 85% 85%, rgba(245, 158, 11, 0.06) 0%, transparent 40%);
+    }
+
+    header {
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(16px);
+      background: rgba(3, 7, 18, 0.85);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-badge {
+      background: linear-gradient(135deg, #38bdf8, #6366f1);
+      color: #000;
+      font-weight: 900;
+      font-size: 0.8rem;
+      padding: 5px 9px;
+      border-radius: 8px;
+      letter-spacing: 0.5px;
+    }
+
+    .brand-title h1 {
+      font-size: 1.2rem;
+      font-weight: 800;
+      letter-spacing: -0.3px;
+      background: linear-gradient(to right, #f8fafc, #94a3b8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .brand-title p {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn-action {
+      background: rgba(56, 189, 248, 0.1);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: var(--primary);
+      padding: 7px 14px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+      touch-action: manipulation;
+    }
+
+    .btn-action:hover {
+      background: rgba(56, 189, 248, 0.2);
+      box-shadow: 0 0 12px var(--primary-glow);
+    }
+
+    .btn-action.gold {
+      background: rgba(245, 158, 11, 0.1);
+      border-color: rgba(245, 158, 11, 0.3);
+      color: var(--gold);
+    }
+    .btn-action.gold:hover {
+      background: rgba(245, 158, 11, 0.2);
+      box-shadow: 0 0 12px var(--gold-glow);
+    }
+
+    .btn-action.emerald {
+      background: rgba(16, 185, 129, 0.1);
+      border-color: rgba(16, 185, 129, 0.3);
+      color: var(--emerald);
+    }
+
+    .btn-action.danger {
+      background: rgba(244, 63, 94, 0.1);
+      border-color: rgba(244, 63, 94, 0.3);
+      color: #fb7185;
+    }
+
+    main {
+      flex: 1;
+      max-width: 1300px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 1.5rem 1rem 3rem 1rem;
+    }
+
+    .hero-banner {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1.75rem;
+      backdrop-filter: blur(12px);
+    }
+
+    .hero-banner h2 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #38bdf8;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .hero-banner p {
+      font-size: 0.85rem;
+      color: #cbd5e1;
+      margin-top: 6px;
+      line-height: 1.6;
+    }
+
+    .grid-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+      gap: 1.5rem;
+    }
+
+    @media (max-width: 480px) {
+      .grid-cards {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .glass-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.25rem;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.85rem;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .card-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #f1f5f9;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .stat-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 9px;
+      border-radius: 20px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+    }
+
+    .canvas-wrap {
+      width: 100%;
+      height: 300px;
+      background: #020617;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 0.85rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      background: rgba(0, 0, 0, 0.25);
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .control-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    input[type="range"] {
+      flex: 1;
+      min-width: 90px;
+      accent-color: var(--primary);
+      cursor: pointer;
+    }
+
+    .studio-select {
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid var(--border);
+      color: var(--text);
+      border-radius: 6px;
+      padding: 5px 10px;
+      font-size: 0.78rem;
+      outline: none;
+    }
+
+    .card-desc {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-top: 8px;
+      line-height: 1.5;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      border-top: 1px solid var(--border);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="brand">
+      <div class="logo-badge">LAB</div>
+      <div class="brand-title">
+        <h1>직관적 수학·지식 시각화 랩</h1>
+        <p>어려운 수식 대신 눈과 손가락으로 만지는 수학의 아름다움</p>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button class="btn-action" id="shareBtn" title="이 페이지 링크 복사">
+        🔗 공유하기
+      </button>
+      <button class="btn-action gold" id="downloadSelfBtn" title="인터넷 없이 평생 소장 가능한 단독 HTML 파일로 다운로드">
+        💾 오프라인 저장 (.html)
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <div class="hero-banner">
+      <h2>✨ 수식을 외우지 않고 눈앞에서 움직이는 원리를 확인하세요</h2>
+      <p>
+        슬라이더를 움직이거나 <strong>3D 정다면체를 마우스/손가락 터치로 360도 회전</strong>시켜 보세요.<br>
+        모든 시각화는 외부 서버나 무거운 설치 없이 브라우저 자체에서 <strong>초당 60프레임으로 실시간 연산</strong>됩니다.
+      </p>
+    </div>
+
+    <div class="grid-cards">
+
+      <!-- 1. 초등 분수 교구 -->
+      <div class="glass-card">
+        <div class="card-header">
+          <div class="card-title">🍕 초등 분수 교구: 피자 & 면적 분할 모델</div>
+          <span class="stat-badge" id="fracBadge" style="color:var(--gold); border-color:var(--gold-glow);">3 / 8 (37.5%)</span>
+        </div>
+        <div class="canvas-wrap">
+          <canvas id="fractionCanvas" width="500" height="300"></canvas>
+        </div>
+        <div class="controls">
+          <div style="display:flex; align-items:center; gap:6px;">
+            <span class="control-label">분모:</span>
+            <input type="range" id="fracDenomSlider" min="1" max="12" value="8" style="width:75px;">
+            <span id="fracDenomText" style="font-size:0.8rem; font-weight:700; width:16px;">8</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:6px;">
+            <span class="control-label">분자:</span>
+            <input type="range" id="fracNumerSlider" min="0" max="8" value="3" style="width:75px;">
+            <span id="fracNumerText" style="font-size:0.8rem; font-weight:700; width:16px;">3</span>
+          </div>
+          <button class="btn-action gold" id="fracModeBtn">모드: 🍕 피자</button>
+        </div>
+        <p class="card-desc">
+          * 슬라이더를 움직이면 분할된 조각이 스르륵 분리되어 <strong>'전체에 대한 부분의 비율'</strong>과 기약분수 약분이 직관적으로 눈에 들어옵니다.
+        </p>
+      </div>
+
+      <!-- 2. 단위원과 삼각함수 -->
+      <div class="glass-card">
+        <div class="card-header">
+          <div class="card-title">⚪ 단위원과 삼각함수: sin·cos 파동 트레이서</div>
+          <span class="stat-badge" id="trigBadge" style="color:var(--primary); border-color:var(--primary-glow);">θ: 45°</span>
+        </div>
+        <div class="canvas-wrap">
+          <canvas id="trigCanvas" width="500" height="300"></canvas>
+        </div>
+        <div class="controls">
+          <span class="control-label">각도 (θ):</span>
+          <input type="range" id="trigSlider" min="0" max="360" value="45">
+          <button class="btn-action" id="trigAutoBtn">▶ 자동 회전</button>
+        </div>
+        <p class="card-desc">
+          * 단위원 위를 회전하는 점의 수직 높이(sin, 주황)와 수평 밑변(cos, 청록)이 실시간 오른쪽 파동 곡선으로 뻗어나갑니다.
+        </p>
+      </div>
+
+      <!-- 3. 피보나치 수열과 황금 나선 -->
+      <div class="glass-card">
+        <div class="card-header">
+          <div class="card-title">🌀 피보나치 수열과 황금 나선 (Golden Spiral)</div>
+          <span class="stat-badge" id="fibBadge" style="color:var(--emerald); border-color:rgba(16,185,129,0.3);">N=7 (Fn=13)</span>
+        </div>
+        <div class="canvas-wrap">
+          <canvas id="fibonacciCanvas" width="500" height="300"></canvas>
+        </div>
+        <div class="controls">
+          <span class="control-label">단계 (N):</span>
+          <input type="range" id="fibSlider" min="1" max="10" value="7">
+          <button class="btn-action emerald" id="fibAutoBtn">▶ 단계별 증식</button>
+        </div>
+        <p class="card-desc">
+          * 1, 1, 2, 3, 5, 8, 13... 정사각형 타일들이 시계방향으로 팽창하며 자연계의 신비인 <strong>황금비(Φ ≈ 1.618)</strong> 나선을 그립니다.
+        </p>
+      </div>
+
+      <!-- 4. 갈톤 보드 -->
+      <div class="glass-card">
+        <div class="card-header">
+          <div class="card-title">🎱 갈톤 보드: 핀볼 낙하와 정규분포 (중심극한정리)</div>
+          <span class="stat-badge" id="galtonBadge">구슬: 0개</span>
+        </div>
+        <div class="canvas-wrap">
+          <canvas id="galtonCanvas" width="500" height="300"></canvas>
+        </div>
+        <div class="controls">
+          <button class="btn-action" id="galtonDropBtn">🎱 20개 투하</button>
+          <button class="btn-action gold" id="galtonStreamBtn">⚡ 연속 투하</button>
+          <button class="btn-action danger" id="galtonResetBtn">🔄 리셋</button>
+        </div>
+        <p class="card-desc">
+          * 핀을 거쳐 좌우 50% 확률로 튕겨 떨어진 구슬들이 바닥에 쌓이며 아름다운 <strong>가우스 종형 곡선(정규분포)</strong>을 형성합니다.
+        </p>
+      </div>
+
+      <!-- 5. 3D 플라톤 정다면체 탐색기 -->
+      <div class="glass-card">
+        <div class="card-header">
+          <div class="card-title">📐 3D 플라톤 정다면체 탐색기 (Euler V - E + F = 2)</div>
+          <span class="stat-badge" id="polyBadge" style="color:var(--primary); border-color:var(--primary-glow);">V:8 | E:12 | F:6</span>
+        </div>
+        <div class="canvas-wrap" id="polyWrap" style="cursor:grab; touch-action:none;">
+          <canvas id="polyhedronCanvas" width="500" height="300"></canvas>
+        </div>
+        <div class="controls">
+          <select id="polySelect" class="studio-select">
+            <option value="cube" selected>정육면체 (Cube, 6면)</option>
+            <option value="tetrahedron">정사면체 (Tetrahedron, 4면)</option>
+            <option value="octahedron">정팔면체 (Octahedron, 8면)</option>
+            <option value="dodecahedron">정십이면체 (Dodecahedron, 12면)</option>
+            <option value="icosahedron">정이십면체 (Icosahedron, 20면)</option>
+          </select>
+          <button class="btn-action" id="polyAutoBtn">⏸ 자동 회전 정지</button>
+          <span style="font-size:0.72rem; color:var(--text-muted); margin-left:auto;">💡 마우스/터치 드래그 360° 회전</span>
+        </div>
+        <p class="card-desc">
+          * 화면을 드래그해 3D 입체를 돌려보며 <strong>꼭짓점(V) - 모서리(E) + 면(F) = 2</strong>라는 위상수학적 오일러 불변성을 확인합니다.
+        </p>
+      </div>
+
+      <!-- 6. 피타고라스 유체 정리 -->
+      <div class="glass-card">
+        <div class="card-header">
+          <div class="card-title">🌊 피타고라스 정리: 유체 회전 증명 (a² + b² = c²)</div>
+          <span class="stat-badge" id="angleBadge">각도: 0°</span>
+        </div>
+        <div class="canvas-wrap">
+          <canvas id="pythagorasCanvas" width="500" height="300"></canvas>
+        </div>
+        <div class="controls">
+          <span class="control-label">회전:</span>
+          <input type="range" id="pythagorasSlider" min="0" max="360" value="0">
+          <button class="btn-action" id="autoSpinBtn">▶ 자동 회전</button>
+        </div>
+        <p class="card-desc">
+          * 사각형을 회전시키면 밑변과 높이의 두 사각형에 채워진 푸른 액체가 빗변의 사각형으로 남김없이 쏟아져 들어갑니다.
+        </p>
+      </div>
+
+      <!-- 7. 푸리에 에피사이클 -->
+      <div class="glass-card">
+        <div class="card-header">
+          <div class="card-title">〰️ 푸리에 에피사이클: 회전하는 원들의 파동 합성</div>
+          <span class="stat-badge" id="circleCountBadge">조화 원: 5개</span>
+        </div>
+        <div class="canvas-wrap">
+          <canvas id="fourierCanvas" width="500" height="300"></canvas>
+        </div>
+        <div class="controls">
+          <span class="control-label">조화 성분:</span>
+          <input type="range" id="fourierSlider" min="1" max="15" value="5">
+          <button class="btn-action gold" id="waveShapeBtn">파형: 사각파</button>
+        </div>
+        <p class="card-desc">
+          * 단순한 원들의 회전이 서로 연결되어 사각파·톱니파·삼각파를 그리는 과정을 직관적으로 시각화합니다.
+        </p>
+      </div>
+
+    </div>
+  </main>
+
+  <footer>
+    <p>Antigravity Vision Studio - Intuitive Math Lab | 100% Client-Side Pure HTML5 Canvas</p>
+    <p style="margin-top:4px; opacity:0.7;">자유롭게 공유하고 수업이나 학습에 활용하실 수 있습니다.</p>
+  </footer>
+
+  <script>
+    // Share button
+    document.getElementById('shareBtn').addEventListener('click', () => {
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(window.location.href);
+        alert('이 페이지의 주소가 복사되었습니다! 친구나 학생들에게 공유해 보세요.');
+      } else {
+        prompt('아래 주소를 복사하세요:', window.location.href);
+      }
+    });
+
+    // Offline download button
+    document.getElementById('downloadSelfBtn').addEventListener('click', () => {
+      const blob = new Blob([document.documentElement.outerHTML], { type: 'text/html;charset=utf-8' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'Intuitive_Math_Lab.html';
+      a.click();
+    });
+
+    /* =====================================================================
+     * 1. FRACTION CANVAS
+     * ===================================================================== */
+    const fracCanvas = document.getElementById('fractionCanvas');
+    const fracCtx = fracCanvas.getContext('2d');
+    const fracDenomSlider = document.getElementById('fracDenomSlider');
+    const fracNumerSlider = document.getElementById('fracNumerSlider');
+    const fracDenomText = document.getElementById('fracDenomText');
+    const fracNumerText = document.getElementById('fracNumerText');
+    const fracBadge = document.getElementById('fracBadge');
+    const fracModeBtn = document.getElementById('fracModeBtn');
+
+    let fracDenom = 8, fracNumer = 3, fracMode = 'pizza';
+    function gcd(a, b) { return b === 0 ? a : gcd(b, a % b); }
+
+    function drawFraction() {
+      const w = fracCanvas.width, h = fracCanvas.height;
+      fracCtx.clearRect(0, 0, w, h);
+      const percent = ((fracNumer / fracDenom) * 100).toFixed(1);
+      const g = gcd(fracNumer, fracDenom);
+      const simStr = (g > 1 && fracNumer > 0) ? ` = ${fracNumer/g}/${fracDenom/g}` : '';
+      fracBadge.textContent = `${fracNumer} / ${fracDenom}${simStr} (${percent}%)`;
+      fracDenomText.textContent = fracDenom;
+      fracNumerText.textContent = fracNumer;
+
+      if (fracMode === 'pizza') {
+        const cx = w / 2, cy = h / 2 - 10, radius = 95;
+        const angleStep = (Math.PI * 2) / fracDenom;
+
+        fracCtx.beginPath();
+        fracCtx.arc(cx, cy, radius + 12, 0, Math.PI * 2);
+        fracCtx.fillStyle = 'rgba(255, 255, 255, 0.03)';
+        fracCtx.strokeStyle = 'rgba(255, 255, 255, 0.12)';
+        fracCtx.lineWidth = 2;
+        fracCtx.fill();
+        fracCtx.stroke();
+
+        for (let i = 0; i < fracDenom; i++) {
+          const startAngle = i * angleStep - Math.PI / 2;
+          const endAngle = (i + 1) * angleStep - Math.PI / 2;
+          const midAngle = (startAngle + endAngle) / 2;
+          const isSelected = i < fracNumer;
+
+          fracCtx.save();
+          if (isSelected) {
+            fracCtx.translate(Math.cos(midAngle) * 14, Math.sin(midAngle) * 14);
+          }
+          fracCtx.beginPath();
+          fracCtx.moveTo(cx, cy);
+          fracCtx.arc(cx, cy, radius, startAngle, endAngle);
+          fracCtx.closePath();
+
+          if (isSelected) {
+            const grad = fracCtx.createRadialGradient(cx, cy, 10, cx, cy, radius);
+            grad.addColorStop(0, '#fef08a');
+            grad.addColorStop(0.7, '#f59e0b');
+            grad.addColorStop(1, '#d97706');
+            fracCtx.fillStyle = grad;
+            fracCtx.strokeStyle = '#fef3c7';
+            fracCtx.lineWidth = 2;
+            fracCtx.fill();
+            fracCtx.stroke();
+
+            const tx = cx + Math.cos(midAngle) * (radius * 0.6);
+            const ty = cy + Math.sin(midAngle) * (radius * 0.6);
+            fracCtx.beginPath();
+            fracCtx.arc(tx, ty, 6, 0, Math.PI * 2);
+            fracCtx.fillStyle = '#b91c1c';
+            fracCtx.fill();
+          } else {
+            fracCtx.fillStyle = 'rgba(255, 255, 255, 0.04)';
+            fracCtx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+            fracCtx.lineWidth = 1;
+            fracCtx.fill();
+            fracCtx.stroke();
+          }
+          fracCtx.restore();
+        }
+
+        fracCtx.fillStyle = '#94a3b8';
+        fracCtx.font = '11px sans-serif';
+        fracCtx.textAlign = 'center';
+        fracCtx.fillText(`선택: ${fracNumer}조각 / 전체: ${fracDenom}조각 | 잔여: ${fracDenom - fracNumer}조각 (${((1 - fracNumer / fracDenom) * 100).toFixed(1)}%)`, cx, h - 14);
+      } else {
+        const barX = 40, barY = 100, barW = w - 80, barH = 65;
+        const cellW = barW / fracDenom;
+        for (let i = 0; i < fracDenom; i++) {
+          const x = barX + i * cellW;
+          const isSelected = i < fracNumer;
+          if (isSelected) {
+            const grad = fracCtx.createLinearGradient(x, barY, x, barY + barH);
+            grad.addColorStop(0, '#38bdf8'); grad.addColorStop(1, '#0284c7');
+            fracCtx.fillStyle = grad;
+            fracCtx.fillRect(x + 1, barY + 1, cellW - 2, barH - 2);
+            fracCtx.fillStyle = '#ffffff';
+            fracCtx.font = 'bold 11px sans-serif';
+            fracCtx.textAlign = 'center';
+            fracCtx.fillText(`1/${fracDenom}`, x + cellW / 2, barY + barH / 2 + 4);
+          } else {
+            fracCtx.fillStyle = 'rgba(255, 255, 255, 0.03)';
+            fracCtx.fillRect(x + 1, barY + 1, cellW - 2, barH - 2);
+            fracCtx.fillStyle = 'rgba(255, 255, 255, 0.3)';
+            fracCtx.font = '10px sans-serif';
+            fracCtx.textAlign = 'center';
+            fracCtx.fillText(`1/${fracDenom}`, x + cellW / 2, barY + barH / 2 + 4);
+          }
+          fracCtx.strokeStyle = 'rgba(255, 255, 255, 0.15)';
+          fracCtx.strokeRect(x, barY, cellW, barH);
+        }
+        fracCtx.fillStyle = '#f59e0b';
+        fracCtx.fillRect(barX, barY + barH + 15, barW * (fracNumer / fracDenom), 6);
+        fracCtx.fillStyle = 'rgba(255, 255, 255, 0.1)';
+        fracCtx.fillRect(barX + barW * (fracNumer / fracDenom), barY + barH + 15, barW * (1 - fracNumer / fracDenom), 6);
+        fracCtx.fillStyle = '#cbd5e1';
+        fracCtx.font = '12px sans-serif';
+        fracCtx.textAlign = 'center';
+        fracCtx.fillText(`전체 1 중 ${fracNumer}/${fracDenom} = ${percent}% 충족`, w / 2, h - 25);
+      }
+    }
+
+    fracDenomSlider.addEventListener('input', (e) => {
+      fracDenom = parseInt(e.target.value);
+      if (fracNumer > fracDenom) { fracNumer = fracDenom; fracNumerSlider.value = fracNumer; }
+      fracNumerSlider.max = fracDenom;
+      drawFraction();
+    });
+    fracNumerSlider.addEventListener('input', (e) => { fracNumer = parseInt(e.target.value); drawFraction(); });
+    fracModeBtn.addEventListener('click', () => {
+      fracMode = fracMode === 'pizza' ? 'bar' : 'pizza';
+      fracModeBtn.textContent = fracMode === 'pizza' ? '모드: 🍕 피자' : '모드: 📊 막대';
+      drawFraction();
+    });
+    drawFraction();
+
+    /* =====================================================================
+     * 2. TRIGONOMETRY CANVAS
+     * ===================================================================== */
+    const trigCanvas = document.getElementById('trigCanvas');
+    const trigCtx = trigCanvas.getContext('2d');
+    const trigSlider = document.getElementById('trigSlider');
+    const trigBadge = document.getElementById('trigBadge');
+    const trigAutoBtn = document.getElementById('trigAutoBtn');
+
+    let trigAngle = 45, isTrigAuto = false, trigWaveHistory = [];
+
+    function drawTrig() {
+      const w = trigCanvas.width, h = trigCanvas.height;
+      trigCtx.clearRect(0, 0, w, h);
+      const rad = (trigAngle * Math.PI) / 180;
+      const sinVal = Math.sin(rad), cosVal = Math.cos(rad);
+      trigBadge.textContent = `θ: ${trigAngle}° | sin: ${sinVal.toFixed(2)} | cos: ${cosVal.toFixed(2)}`;
+
+      const cx = 110, cy = h / 2, R = 70;
+      trigCtx.strokeStyle = 'rgba(255, 255, 255, 0.15)';
+      trigCtx.beginPath();
+      trigCtx.moveTo(cx - R - 15, cy); trigCtx.lineTo(cx + R + 15, cy);
+      trigCtx.moveTo(cx, cy - R - 15); trigCtx.lineTo(cx, cy + R + 15);
+      trigCtx.stroke();
+
+      trigCtx.beginPath(); trigCtx.arc(cx, cy, R, 0, Math.PI * 2);
+      trigCtx.strokeStyle = 'rgba(255, 255, 255, 0.3)'; trigCtx.lineWidth = 1.5; trigCtx.stroke();
+
+      const px = cx + R * cosVal, py = cy - R * sinVal;
+      trigCtx.beginPath(); trigCtx.moveTo(cx, cy); trigCtx.lineTo(px, cy);
+      trigCtx.strokeStyle = '#10b981'; trigCtx.lineWidth = 2.5; trigCtx.stroke();
+
+      trigCtx.beginPath(); trigCtx.moveTo(px, cy); trigCtx.lineTo(px, py);
+      trigCtx.strokeStyle = '#f59e0b'; trigCtx.lineWidth = 2.5; trigCtx.stroke();
+
+      trigCtx.beginPath(); trigCtx.moveTo(cx, cy); trigCtx.lineTo(px, py);
+      trigCtx.strokeStyle = '#38bdf8'; trigCtx.lineWidth = 2; trigCtx.stroke();
+
+      trigCtx.beginPath(); trigCtx.arc(px, py, 5, 0, Math.PI * 2);
+      trigCtx.fillStyle = '#ffffff'; trigCtx.fill();
+
+      const waveStartX = 220;
+      trigCtx.beginPath(); trigCtx.setLineDash([3, 3]);
+      trigCtx.moveTo(px, py); trigCtx.lineTo(waveStartX, py);
+      trigCtx.strokeStyle = 'rgba(245, 158, 11, 0.4)'; trigCtx.stroke(); trigCtx.setLineDash([]);
+
+      trigWaveHistory.unshift(py);
+      if (trigWaveHistory.length > (w - waveStartX)) trigWaveHistory.pop();
+
+      trigCtx.beginPath();
+      trigCtx.moveTo(waveStartX, cy); trigCtx.lineTo(w - 10, cy);
+      trigCtx.strokeStyle = 'rgba(255, 255, 255, 0.15)'; trigCtx.stroke();
+
+      trigCtx.beginPath();
+      for (let i = 0; i < trigWaveHistory.length; i++) {
+        const wx = waveStartX + i, wy = trigWaveHistory[i];
+        if (i === 0) trigCtx.moveTo(wx, wy); else trigCtx.lineTo(wx, wy);
+      }
+      trigCtx.strokeStyle = '#f59e0b'; trigCtx.lineWidth = 2.5; trigCtx.stroke();
+
+      trigCtx.font = '10px sans-serif'; trigCtx.textAlign = 'left';
+      trigCtx.fillStyle = '#10b981'; trigCtx.fillText(`■ cosθ = ${cosVal.toFixed(2)}`, 12, 20);
+      trigCtx.fillStyle = '#f59e0b'; trigCtx.fillText(`■ sinθ = ${sinVal.toFixed(2)}`, 12, 34);
+    }
+
+    trigSlider.addEventListener('input', (e) => { trigAngle = parseInt(e.target.value); drawTrig(); });
+    trigAutoBtn.addEventListener('click', () => {
+      isTrigAuto = !isTrigAuto;
+      trigAutoBtn.textContent = isTrigAuto ? '⏸ 정지' : '▶ 자동 회전';
+      if (isTrigAuto) {
+        function loop() {
+          if (!isTrigAuto) return;
+          trigAngle = (trigAngle + 2) % 360; trigSlider.value = trigAngle;
+          drawTrig(); requestAnimationFrame(loop);
+        }
+        requestAnimationFrame(loop);
+      }
+    });
+    drawTrig();
+
+    /* =====================================================================
+     * 3. FIBONACCI CANVAS
+     * ===================================================================== */
+    const fibCanvas = document.getElementById('fibonacciCanvas');
+    const fibCtx = fibCanvas.getContext('2d');
+    const fibSlider = document.getElementById('fibSlider');
+    const fibBadge = document.getElementById('fibBadge');
+    const fibAutoBtn = document.getElementById('fibAutoBtn');
+
+    let fibStep = 7, isFibAuto = false;
+    const FIB_SEQ = [1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89];
+    const NEON_COLORS = ['#38bdf8', '#818cf8', '#c084fc', '#f43f5e', '#f59e0b', '#10b981', '#06b6d4', '#6366f1'];
+
+    function drawFibonacci() {
+      const w = fibCanvas.width, h = fibCanvas.height;
+      fibCtx.clearRect(0, 0, w, h);
+      const fn = FIB_SEQ[fibStep - 1];
+      const fnPrev = fibStep > 1 ? FIB_SEQ[fibStep - 2] : 1;
+      fibBadge.textContent = `N=${fibStep} | Fn=${fn} | 비율: ${(fn/fnPrev).toFixed(3)} (→ Φ 1.618)`;
+
+      let boxes = [], x = 0, y = 0, dir = 0;
+      for (let i = 0; i < fibStep; i++) {
+        const s = FIB_SEQ[i];
+        let bx = x, by = y;
+        if (dir === 1) by = y - s;
+        else if (dir === 2) bx = x - s;
+        boxes.push({ x: bx, y: by, size: s, dir: dir, idx: i });
+        if (i === 0) { x = 0; y = -FIB_SEQ[1]; dir = 1; }
+        else if (dir === 1) { x = bx - FIB_SEQ[i + 1]; y = by; dir = 2; }
+        else if (dir === 2) { x = bx; y = by + s; dir = 3; }
+        else if (dir === 3) { x = bx + s; y = by; dir = 0; }
+        else if (dir === 0) { x = bx; y = by - FIB_SEQ[i + 1]; dir = 1; }
+      }
+
+      let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+      boxes.forEach(b => {
+        minX = Math.min(minX, b.x); maxX = Math.max(maxX, b.x + b.size);
+        minY = Math.min(minY, b.y); maxY = Math.max(maxY, b.y + b.size);
+      });
+      const bw = maxX - minX || 1, bh = maxY - minY || 1;
+      const scale = Math.min((w - 70) / bw, (h - 60) / bh);
+      const offsetX = (w - bw * scale) / 2 - minX * scale;
+      const offsetY = (h - bh * scale) / 2 - minY * scale;
+
+      boxes.forEach((b, i) => {
+        const sx = b.x * scale + offsetX, sy = b.y * scale + offsetY, ssize = b.size * scale;
+        const col = NEON_COLORS[i % NEON_COLORS.length];
+        fibCtx.fillStyle = col + '1a'; fibCtx.fillRect(sx, sy, ssize, ssize);
+        fibCtx.strokeStyle = col; fibCtx.lineWidth = 1.8; fibCtx.strokeRect(sx, sy, ssize, ssize);
+        if (ssize > 16) {
+          fibCtx.fillStyle = '#ffffff'; fibCtx.font = 'bold 11px sans-serif';
+          fibCtx.textAlign = 'center'; fibCtx.fillText(`${b.size}`, sx + ssize / 2, sy + ssize / 2 + 4);
+        }
+      });
+
+      fibCtx.beginPath();
+      boxes.forEach(b => {
+        const sx = b.x * scale + offsetX, sy = b.y * scale + offsetY, ssize = b.size * scale;
+        let arcCenterX = sx, arcCenterY = sy, startA = 0, endA = 0;
+        if (b.idx === 0) { arcCenterX = sx + ssize; arcCenterY = sy; startA = Math.PI / 2; endA = Math.PI; }
+        else if (b.dir === 1) { arcCenterX = sx; arcCenterY = sy; startA = Math.PI / 2; endA = 0; }
+        else if (b.dir === 2) { arcCenterX = sx; arcCenterY = sy + ssize; startA = 0; endA = -Math.PI / 2; }
+        else if (b.dir === 3) { arcCenterX = sx + ssize; arcCenterY = sy + ssize; startA = -Math.PI / 2; endA = Math.PI; }
+        else if (b.dir === 0) { arcCenterX = sx + ssize; arcCenterY = sy; startA = Math.PI; endA = Math.PI / 2; }
+        fibCtx.arc(arcCenterX, arcCenterY, ssize, startA, endA, true);
+      });
+      fibCtx.strokeStyle = '#fef08a'; fibCtx.lineWidth = 2.5; fibCtx.stroke();
+    }
+
+    fibSlider.addEventListener('input', (e) => { fibStep = parseInt(e.target.value); drawFibonacci(); });
+    fibAutoBtn.addEventListener('click', () => {
+      isFibAuto = !isFibAuto;
+      fibAutoBtn.textContent = isFibAuto ? '⏸ 정지' : '▶ 단계별 증식';
+      if (isFibAuto) {
+        let t = setInterval(() => {
+          if (!isFibAuto) { clearInterval(t); return; }
+          fibStep = (fibStep % 9) + 1; fibSlider.value = fibStep; drawFibonacci();
+        }, 800);
+      }
+    });
+    drawFibonacci();
+
+    /* =====================================================================
+     * 4. GALTON BOARD CANVAS
+     * ===================================================================== */
+    const galtonCanvas = document.getElementById('galtonCanvas');
+    const galtonCtx = galtonCanvas.getContext('2d');
+    const NUM_ROWS = 8, NUM_BINS = NUM_ROWS + 1;
+    const binCounts = new Array(NUM_BINS).fill(0);
+    let totalBalls = 0, activeBalls = [], isGaltonStreaming = false;
+
+    const pins = [], pinStartX = galtonCanvas.width / 2, pinStartY = 40, pinSpacingX = 26, pinSpacingY = 22;
+    for (let r = 0; r < NUM_ROWS; r++) {
+      for (let c = 0; c <= r; c++) {
+        pins.push({ x: pinStartX + (c - r / 2) * pinSpacingX, y: pinStartY + r * pinSpacingY });
+      }
+    }
+
+    function addGaltonBall() {
+      activeBalls.push({ x: pinStartX + (Math.random() - 0.5) * 4, y: 15, vx: 0, vy: 1.5, radius: 3.5 });
+    }
+    function resetGalton() {
+      binCounts.fill(0); totalBalls = 0; activeBalls = [];
+      document.getElementById('galtonBadge').textContent = '구슬: 0개 | 정규분포 수렴';
+    }
+
+    document.getElementById('galtonDropBtn').addEventListener('click', () => {
+      for (let i = 0; i < 20; i++) setTimeout(addGaltonBall, i * 40);
+    });
+    document.getElementById('galtonStreamBtn').addEventListener('click', (e) => {
+      isGaltonStreaming = !isGaltonStreaming;
+      e.target.textContent = isGaltonStreaming ? '⏸ 정지' : '⚡ 연속 투하';
+    });
+    document.getElementById('galtonResetBtn').addEventListener('click', resetGalton);
+
+    function updateAndDrawGalton() {
+      const w = galtonCanvas.width, h = galtonCanvas.height;
+      galtonCtx.clearRect(0, 0, w, h);
+      if (isGaltonStreaming && Math.random() < 0.6) addGaltonBall();
+
+      pins.forEach(p => {
+        galtonCtx.beginPath(); galtonCtx.arc(p.x, p.y, 2.5, 0, Math.PI * 2);
+        galtonCtx.fillStyle = '#94a3b8'; galtonCtx.fill();
+      });
+
+      const binBottomY = h - 15, binTopY = pinStartY + NUM_ROWS * pinSpacingY + 12;
+      const binW = pinSpacingX, startBx = pinStartX - (NUM_BINS / 2) * binW;
+
+      for (let i = 0; i <= NUM_BINS; i++) {
+        const bx = startBx + i * binW;
+        galtonCtx.beginPath(); galtonCtx.moveTo(bx, binTopY); galtonCtx.lineTo(bx, binBottomY);
+        galtonCtx.strokeStyle = 'rgba(255, 255, 255, 0.2)'; galtonCtx.stroke();
+      }
+
+      const maxBarH = binBottomY - binTopY - 10;
+      for (let i = 0; i < NUM_BINS; i++) {
+        const count = binCounts[i];
+        if (count > 0) {
+          const barH = Math.min(count * 2.2, maxBarH);
+          const bx = startBx + i * binW + 2, by = binBottomY - barH;
+          galtonCtx.fillStyle = '#38bdf8'; galtonCtx.fillRect(bx, by, binW - 4, barH);
+        }
+      }
+
+      if (totalBalls >= 15) {
+        galtonCtx.beginPath();
+        const meanBin = (NUM_BINS - 1) / 2, variance = NUM_ROWS * 0.25, stdDev = Math.sqrt(variance);
+        for (let x = startBx; x <= startBx + NUM_BINS * binW; x += 3) {
+          const bc = (x - startBx) / binW - 0.5;
+          const prob = (1 / (stdDev * Math.sqrt(2 * Math.PI))) * Math.exp(-Math.pow(bc - meanBin, 2) / (2 * variance));
+          const cy = binBottomY - Math.min(prob * totalBalls * 2.2, maxBarH + 8);
+          if (x === startBx) galtonCtx.moveTo(x, cy); else galtonCtx.lineTo(x, cy);
+        }
+        galtonCtx.strokeStyle = '#f59e0b'; galtonCtx.lineWidth = 2; galtonCtx.stroke();
+      }
+
+      for (let i = activeBalls.length - 1; i >= 0; i--) {
+        const b = activeBalls[i];
+        b.y += b.vy; b.x += b.vx; b.vy += 0.25; b.vx *= 0.95;
+        pins.forEach(p => {
+          const dx = b.x - p.x, dy = b.y - p.y;
+          if (Math.sqrt(dx*dx + dy*dy) < b.radius + 3.5 && b.y > p.y - 4 && b.vy > 0) {
+            b.vx = (Math.random() < 0.5 ? -1 : 1) * (1.2 + Math.random() * 0.5);
+            b.vy = -0.8; b.y = p.y - 3;
+          }
+        });
+        if (b.y >= binBottomY - 5) {
+          let lb = Math.floor((b.x - startBx) / binW);
+          lb = Math.max(0, Math.min(NUM_BINS - 1, lb));
+          binCounts[lb]++; totalBalls++;
+          document.getElementById('galtonBadge').textContent = `구슬: ${totalBalls}개 | N=8 정규분포 수렴`;
+          activeBalls.splice(i, 1); continue;
+        }
+        galtonCtx.beginPath(); galtonCtx.arc(b.x, b.y, b.radius, 0, Math.PI * 2);
+        galtonCtx.fillStyle = '#f59e0b'; galtonCtx.fill();
+      }
+      requestAnimationFrame(updateAndDrawGalton);
+    }
+    updateAndDrawGalton();
+
+    /* =====================================================================
+     * 5. 3D PLATONIC POLYHEDRA (TOUCH & MOUSE ENABLED)
+     * ===================================================================== */
+    const polyCanvas = document.getElementById('polyhedronCanvas');
+    const polyCtx = polyCanvas.getContext('2d');
+    const polySelect = document.getElementById('polySelect');
+    const polyAutoBtn = document.getElementById('polyAutoBtn');
+    const polyBadge = document.getElementById('polyBadge');
+    const polyWrap = document.getElementById('polyWrap');
+
+    const PHI = (1 + Math.sqrt(5)) / 2, INV_PHI = 1 / PHI;
+    const POLYHEDRA = {
+      cube: { name: '정육면체', V: 8, E: 12, F: 6, scale: 75,
+        vertices: [[-1,-1,-1],[1,-1,-1],[1,1,-1],[-1,1,-1],[-1,-1,1],[1,-1,1],[1,1,1],[-1,1,1]],
+        faces: [[0,1,2,3],[5,4,7,6],[4,0,3,7],[1,5,6,2],[3,2,6,7],[4,5,1,0]] },
+      tetrahedron: { name: '정사면체', V: 4, E: 6, F: 4, scale: 90,
+        vertices: [[1,1,1],[1,-1,-1],[-1,1,-1],[-1,-1,1]],
+        faces: [[0,1,2],[0,2,3],[0,3,1],[1,3,2]] },
+      octahedron: { name: '정팔면체', V: 6, E: 12, F: 8, scale: 95,
+        vertices: [[1,0,0],[-1,0,0],[0,1,0],[0,-1,0],[0,0,1],[0,0,-1]],
+        faces: [[0,2,4],[2,1,4],[1,3,4],[3,0,4],[2,0,5],[1,2,5],[3,1,5],[0,3,5]] },
+      dodecahedron: { name: '정십이면체', V: 20, E: 30, F: 12, scale: 65,
+        vertices: [[-1,-1,-1],[1,-1,-1],[1,1,-1],[-1,1,-1],[-1,-1,1],[1,-1,1],[1,1,1],[-1,1,1],
+          [0,-PHI,-INV_PHI],[0,-PHI,INV_PHI],[0,PHI,-INV_PHI],[0,PHI,INV_PHI],
+          [-INV_PHI,0,-PHI],[INV_PHI,0,-PHI],[-INV_PHI,0,PHI],[INV_PHI,0,PHI],
+          [-PHI,-INV_PHI,0],[-PHI,INV_PHI,0],[PHI,-INV_PHI,0],[PHI,INV_PHI,0]],
+        faces: [[0,8,1,13,12],[0,8,9,4,16],[0,12,3,17,16],[1,8,9,5,18],[1,13,2,19,18],[2,10,3,12,13],[2,10,11,6,19],[3,10,11,7,17],[4,9,5,15,14],[4,14,7,17,16],[5,15,6,19,18],[6,11,7,14,15]] },
+      icosahedron: { name: '정이십면체', V: 12, E: 30, F: 20, scale: 75,
+        vertices: [[-1,PHI,0],[1,PHI,0],[-1,-PHI,0],[1,-PHI,0],[0,-1,PHI],[0,1,PHI],[0,-1,-PHI],[0,1,-PHI],[PHI,0,-1],[PHI,0,1],[-PHI,0,-1],[-PHI,0,1]],
+        faces: [[0,1,5],[0,1,7],[0,5,11],[0,7,10],[0,10,11],[1,5,9],[1,7,8],[1,8,9],[2,3,4],[2,3,6],[2,4,11],[2,6,10],[2,10,11],[3,4,9],[3,6,8],[3,8,9],[4,5,9],[4,5,11],[6,7,8],[6,7,10]] }
+    };
+
+    let curPolyKey = 'cube', rotX = 0.35, rotY = 0.45, isPolyAuto = true, isDraggingPoly = false, lastMouseX = 0, lastMouseY = 0;
+
+    function updatePolyBadge() {
+      const p = POLYHEDRA[curPolyKey];
+      polyBadge.textContent = `V:${p.V} | E:${p.E} | F:${p.F} → V - E + F = ${p.V - p.E + p.F}`;
+    }
+    updatePolyBadge();
+    polySelect.addEventListener('change', (e) => { curPolyKey = e.target.value; updatePolyBadge(); });
+    polyAutoBtn.addEventListener('click', () => {
+      isPolyAuto = !isPolyAuto; polyAutoBtn.textContent = isPolyAuto ? '⏸ 정지' : '▶ 자동 회전';
+    });
+
+    // Mouse drag
+    polyCanvas.addEventListener('mousedown', (e) => { isDraggingPoly = true; lastMouseX = e.clientX; lastMouseY = e.clientY; });
+    window.addEventListener('mouseup', () => { isDraggingPoly = false; });
+    window.addEventListener('mousemove', (e) => {
+      if (!isDraggingPoly) return;
+      rotY += (e.clientX - lastMouseX) * 0.01; rotX += (e.clientY - lastMouseY) * 0.01;
+      lastMouseX = e.clientX; lastMouseY = e.clientY;
+    });
+
+    // Touch drag for smartphones
+    polyCanvas.addEventListener('touchstart', (e) => {
+      if (e.touches.length === 1) {
+        isDraggingPoly = true; lastMouseX = e.touches[0].clientX; lastMouseY = e.touches[0].clientY;
+      }
+    }, { passive: true });
+    window.addEventListener('touchend', () => { isDraggingPoly = false; });
+    window.addEventListener('touchmove', (e) => {
+      if (!isDraggingPoly || e.touches.length !== 1) return;
+      rotY += (e.touches[0].clientX - lastMouseX) * 0.01; rotX += (e.touches[0].clientY - lastMouseY) * 0.01;
+      lastMouseX = e.touches[0].clientX; lastMouseY = e.touches[0].clientY;
+    }, { passive: true });
+
+    function drawPolyhedron() {
+      const w = polyCanvas.width, h = polyCanvas.height;
+      polyCtx.clearRect(0, 0, w, h);
+      if (isPolyAuto && !isDraggingPoly) { rotY += 0.012; rotX += 0.006; }
+      const p = POLYHEDRA[curPolyKey], cx = w / 2, cy = h / 2 - 5, d = 3.5;
+      const cosX = Math.cos(rotX), sinX = Math.sin(rotX), cosY = Math.cos(rotY), sinY = Math.sin(rotY);
+
+      const transformed = p.vertices.map(v => {
+        let x1 = v[0] * cosY + v[2] * sinY, y1 = v[1], z1 = -v[0] * sinY + v[2] * cosY;
+        let x2 = x1, y2 = y1 * cosX - z1 * sinX, z2 = y1 * sinX + z1 * cosX;
+        const len = Math.sqrt(v[0]*v[0] + v[1]*v[1] + v[2]*v[2]) || 1;
+        const scale = p.scale / len;
+        const factor = d / Math.max(0.2, z2 * (scale / 70) + d);
+        return { x2d: cx + x2 * scale * factor, y2d: cy + y2 * scale * factor, z: z2 };
+      });
+
+      const sortedFaces = p.faces.map(f => {
+        const avgZ = f.reduce((sum, idx) => sum + transformed[idx].z, 0) / f.length;
+        return { indices: f, avgZ: avgZ };
+      }).sort((a, b) => a.avgZ - b.avgZ);
+
+      sortedFaces.forEach(sf => {
+        const f = sf.indices;
+        polyCtx.beginPath(); polyCtx.moveTo(transformed[f[0]].x2d, transformed[f[0]].y2d);
+        for (let i = 1; i < f.length; i++) polyCtx.lineTo(transformed[f[i]].x2d, transformed[f[i]].y2d);
+        polyCtx.closePath();
+        const depthAlpha = Math.max(0.12, Math.min(0.55, (sf.avgZ + 1.8) / 3.6));
+        polyCtx.fillStyle = `rgba(56, 189, 248, ${depthAlpha * 0.4})`; polyCtx.fill();
+        polyCtx.strokeStyle = 'rgba(56, 189, 248, 0.7)'; polyCtx.lineWidth = 1.8; polyCtx.stroke();
+      });
+
+      transformed.forEach(t => {
+        polyCtx.beginPath(); polyCtx.arc(t.x2d, t.y2d, 3.5, 0, Math.PI * 2);
+        polyCtx.fillStyle = '#ffffff'; polyCtx.fill();
+      });
+      requestAnimationFrame(drawPolyhedron);
+    }
+    drawPolyhedron();
+
+    /* =====================================================================
+     * 6. PYTHAGORAS FLUID CANVAS
+     * ===================================================================== */
+    const pyCanvas = document.getElementById('pythagorasCanvas');
+    const pyCtx = pyCanvas.getContext('2d');
+    const pySlider = document.getElementById('pythagorasSlider');
+    const angleBadge = document.getElementById('angleBadge');
+    const autoSpinBtn = document.getElementById('autoSpinBtn');
+    let pyAngle = 0, isAutoSpin = false;
+
+    function drawPythagoras() {
+      const w = pyCanvas.width, h = pyCanvas.height;
+      pyCtx.clearRect(0, 0, w, h);
+      pyCtx.save();
+      pyCtx.translate(w / 2, h / 2);
+      pyCtx.rotate((pyAngle * Math.PI) / 180);
+      const a = 60, b = 80, c = 100;
+
+      pyCtx.beginPath(); pyCtx.moveTo(-c/2, 20); pyCtx.lineTo(c/2, 20);
+      pyCtx.lineTo(-c/2 + (a*a)/c, 20 - (a*b)/c); pyCtx.closePath();
+      pyCtx.fillStyle = 'rgba(255, 255, 255, 0.08)'; pyCtx.strokeStyle = '#fff'; pyCtx.lineWidth = 1.5;
+      pyCtx.fill(); pyCtx.stroke();
+
+      pyCtx.strokeStyle = 'rgba(56, 189, 248, 0.6)'; pyCtx.strokeRect(-c/2, 20, c, c);
+      const fillProgress = (Math.sin(((pyAngle - 90) * Math.PI) / 180) + 1) / 2;
+      pyCtx.fillStyle = 'rgba(56, 189, 248, 0.7)';
+      pyCtx.fillRect(-c/2, 20 + c * (1 - fillProgress), c, c * fillProgress);
+
+      pyCtx.save();
+      pyCtx.translate(-c/2, 20); pyCtx.rotate(-Math.asin(b/c));
+      pyCtx.strokeStyle = 'rgba(245, 158, 11, 0.6)'; pyCtx.strokeRect(0, -a, a, a);
+      pyCtx.fillStyle = 'rgba(245, 158, 11, 0.7)'; pyCtx.fillRect(0, -a * (1 - fillProgress), a, a * (1 - fillProgress));
+      pyCtx.restore();
+
+      pyCtx.save();
+      pyCtx.translate(c/2, 20); pyCtx.rotate(Math.PI - Math.acos(b/c));
+      pyCtx.strokeStyle = 'rgba(16, 185, 129, 0.6)'; pyCtx.strokeRect(0, -b, b, b);
+      pyCtx.fillStyle = 'rgba(16, 185, 129, 0.7)'; pyCtx.fillRect(0, -b * (1 - fillProgress), b, b * (1 - fillProgress));
+      pyCtx.restore();
+
+      pyCtx.restore();
+      pyCtx.fillStyle = '#94a3b8'; pyCtx.font = '11px sans-serif';
+      pyCtx.fillText(`유체 보존: a²(36) + b²(64) = c²(100)`, 15, 22);
+    }
+    drawPythagoras();
+    pySlider.addEventListener('input', (e) => {
+      pyAngle = parseInt(e.target.value); angleBadge.textContent = `각도: ${pyAngle}°`; drawPythagoras();
+    });
+    autoSpinBtn.addEventListener('click', () => {
+      isAutoSpin = !isAutoSpin; autoSpinBtn.textContent = isAutoSpin ? '⏸ 정지' : '▶ 자동 회전';
+      if (isAutoSpin) {
+        function spin() {
+          if (!isAutoSpin) return;
+          pyAngle = (pyAngle + 1) % 360; pySlider.value = pyAngle;
+          angleBadge.textContent = `각도: ${pyAngle}°`; drawPythagoras(); requestAnimationFrame(spin);
+        }
+        requestAnimationFrame(spin);
+      }
+    });
+
+    /* =====================================================================
+     * 7. FOURIER CANVAS
+     * ===================================================================== */
+    const fCanvas = document.getElementById('fourierCanvas');
+    const fCtx = fCanvas.getContext('2d');
+    const fSlider = document.getElementById('fourierSlider');
+    const circleBadge = document.getElementById('circleCountBadge');
+    const waveShapeBtn = document.getElementById('waveShapeBtn');
+    let fourierTime = 0, wavePoints = [], numCircles = 5, waveType = 'square';
+
+    waveShapeBtn.addEventListener('click', () => {
+      if (waveType === 'square') { waveType = 'sawtooth'; waveShapeBtn.textContent = '파형: 톱니파'; }
+      else if (waveType === 'sawtooth') { waveType = 'triangle'; waveShapeBtn.textContent = '파형: 삼각파'; }
+      else { waveType = 'square'; waveShapeBtn.textContent = '파형: 사각파'; }
+      wavePoints = [];
+    });
+
+    function drawFourier() {
+      const w = fCanvas.width, h = fCanvas.height;
+      fCtx.clearRect(0, 0, w, h);
+      let x = 110, y = h / 2;
+
+      for (let i = 0; i < numCircles; i++) {
+        const prevx = x, prevy = y;
+        let n, radius;
+        if (waveType === 'square') { n = i * 2 + 1; radius = 45 * (4 / (n * Math.PI)); }
+        else if (waveType === 'sawtooth') { n = i + 1; radius = 45 * (2 / (n * Math.PI)) * (i % 2 === 0 ? 1 : -1); }
+        else { n = i * 2 + 1; radius = 50 * (8 / (Math.PI * Math.PI * n * n)) * (i % 2 === 0 ? 1 : -1); }
+        x += radius * Math.cos(n * fourierTime); y += radius * Math.sin(n * fourierTime);
+
+        fCtx.beginPath(); fCtx.arc(prevx, prevy, Math.abs(radius), 0, Math.PI * 2);
+        fCtx.strokeStyle = 'rgba(255, 255, 255, 0.12)'; fCtx.stroke();
+        fCtx.beginPath(); fCtx.moveTo(prevx, prevy); fCtx.lineTo(x, y);
+        fCtx.strokeStyle = 'rgba(56, 189, 248, 0.5)'; fCtx.stroke();
+      }
+
+      wavePoints.unshift(y);
+      if (wavePoints.length > 250) wavePoints.pop();
+
+      fCtx.beginPath(); fCtx.moveTo(x, y); fCtx.lineTo(240, wavePoints[0]);
+      fCtx.strokeStyle = 'rgba(245, 158, 11, 0.4)'; fCtx.stroke();
+
+      fCtx.beginPath();
+      for (let i = 0; i < wavePoints.length; i++) fCtx.lineTo(240 + i, wavePoints[i]);
+      fCtx.strokeStyle = '#38bdf8'; fCtx.lineWidth = 2; fCtx.stroke();
+
+      fourierTime += 0.035;
+      requestAnimationFrame(drawFourier);
+    }
+    drawFourier();
+    fSlider.addEventListener('input', (e) => {
+      numCircles = parseInt(e.target.value); circleBadge.textContent = `조화 원: ${numCircles}개`; wavePoints = [];
+    });
+  </script>
+</body>
+</html>
