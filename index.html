@@ -464,6 +464,105 @@
         </p>
       </div>
 
+      <!-- 8. 최속강하선 (Brachistochrone & 사이클로이드) -->
+      <div class="glass-card">
+        <div class="card-header">
+          <div class="card-title">🎢 최속강하선: 사이클로이드 vs 직선 구슬 경주</div>
+          <span class="stat-badge" id="brachBadge" style="color:var(--primary); border-color:var(--primary-glow);">1위: 사이클로이드</span>
+        </div>
+        <div class="canvas-wrap">
+          <canvas id="brachCanvas" width="500" height="300"></canvas>
+        </div>
+        <div class="controls">
+          <button class="btn-action" id="brachStartBtn">🏁 경주 출발</button>
+          <button class="btn-action gold" id="brachLoopBtn">🔄 연속 경주: ON</button>
+          <span style="font-size:0.72rem; color:var(--text-muted); margin-left:auto;">청록: 사이클로이드 | 주황: 직선 | 초록: 급경사</span>
+        </div>
+        <p class="card-desc">
+          * 두 점을 잇는 최단 거리는 '직선'이지만, 중력을 받아 가장 빨리 도착하는 길은 굴러가는 바퀴가 그리는 <strong>사이클로이드(Cycloid) 곡선</strong>임을 보여줍니다.
+        </p>
+      </div>
+
+      <!-- 9. 몬티 홀의 역설 (Monty Hall Paradox) -->
+      <div class="glass-card">
+        <div class="card-header">
+          <div class="card-title">🚪 몬티 홀의 역설: 조건부 확률 실험기</div>
+          <span class="stat-badge" id="montyBadge" style="color:var(--gold); border-color:var(--gold-glow);">바꾸면 승률 2배 (66.7%)</span>
+        </div>
+        <div class="canvas-wrap" style="cursor:pointer;">
+          <canvas id="montyCanvas" width="500" height="300"></canvas>
+        </div>
+        <div class="controls">
+          <button class="btn-action" id="montySim100Btn">⚡ 100회 고속 실험</button>
+          <button class="btn-action emerald" id="montyAutoBtn">▶ 연속 시뮬레이션</button>
+          <button class="btn-action danger" id="montyResetBtn">🔄 초기화</button>
+        </div>
+        <p class="card-desc">
+          * 3개의 문 중 염소가 든 문 하나를 열어주었을 때, <strong>선택을 바꾸면 당첨 확률이 1/3(33.3%)에서 2/3(66.7%)로 2배가 되는 조건부 확률</strong>을 실증합니다.
+        </p>
+      </div>
+
+      <!-- 10. 프랙탈과 자기유사성 (Fractal Tree & 시어핀스키) -->
+      <div class="glass-card">
+        <div class="card-header">
+          <div class="card-title">🌿 프랙탈과 자기유사성: 재귀 기하학</div>
+          <span class="stat-badge" id="fractalBadge" style="color:var(--emerald); border-color:rgba(16,185,129,0.3);">세대: 8 | 각도: 26°</span>
+        </div>
+        <div class="canvas-wrap">
+          <canvas id="fractalCanvas" width="500" height="300"></canvas>
+        </div>
+        <div class="controls">
+          <span class="control-label">세대:</span>
+          <input type="range" id="fractalDepthSlider" min="1" max="9" value="8" style="width:65px;">
+          <span class="control-label">각도:</span>
+          <input type="range" id="fractalAngleSlider" min="10" max="60" value="26" style="width:65px;">
+          <button class="btn-action gold" id="fractalModeBtn">모드: 🌳 트리</button>
+          <button class="btn-action" id="fractalAnimBtn">▶ 호흡</button>
+        </div>
+        <p class="card-desc">
+          * 부분이 전체를 닮는 <strong>자기유사성(Self-Similarity)</strong> 재귀 공식 하나만으로 나뭇가지와 시어핀스키 삼각형의 무한한 구조가 피어납니다.
+        </p>
+      </div>
+
+      <!-- 11. 몬테카를로 원주율(π) 추정 (Monte Carlo Rain) -->
+      <div class="glass-card">
+        <div class="card-header">
+          <div class="card-title">🎯 몬테카를로 원주율(π) 추정: 무작위 빗방울</div>
+          <span class="stat-badge" id="monteBadge" style="color:var(--primary); border-color:var(--primary-glow);">π ≈ 3.1416</span>
+        </div>
+        <div class="canvas-wrap">
+          <canvas id="monteCanvas" width="500" height="300"></canvas>
+        </div>
+        <div class="controls">
+          <button class="btn-action" id="monteDropBtn">🌧️ +300개 투하</button>
+          <button class="btn-action gold" id="monteStreamBtn">⚡ 연속 폭우: ON</button>
+          <button class="btn-action danger" id="monteResetBtn">🔄 리셋</button>
+        </div>
+        <p class="card-desc">
+          * 정사각형에 무작위로 점을 찍어 <strong>원 안에 들어간 점의 비율 × 4</strong>를 계산하면 점의 개수가 많아질수록 실제 원주율(<strong>π ≈ 3.14159...</strong>)로 수렴합니다.
+        </p>
+      </div>
+
+      <!-- 12. 베지에 곡선 (Bézier Curve & De Casteljau) -->
+      <div class="glass-card">
+        <div class="card-header">
+          <div class="card-title">✒️ 베지에 곡선: 드 카스텔조 선형 보간</div>
+          <span class="stat-badge" id="bezierBadge" style="color:var(--gold); border-color:var(--gold-glow);">t = 0.50</span>
+        </div>
+        <div class="canvas-wrap" style="cursor:grab; touch-action:none;">
+          <canvas id="bezierCanvas" width="500" height="300"></canvas>
+        </div>
+        <div class="controls">
+          <span class="control-label">진행률(t):</span>
+          <input type="range" id="bezierSlider" min="0" max="100" value="50">
+          <button class="btn-action" id="bezierAutoBtn">⏸ 정지</button>
+          <span style="font-size:0.72rem; color:var(--text-muted);">💡 P0~P3 제어점 드래그 가능</span>
+        </div>
+        <p class="card-desc">
+          * 직선 위를 움직이는 점들을 반복적으로 <strong>선형 보간(Lerp)</strong>하여 연결하면 폰트와 자동차 곡면을 설계하는 매끄러운 3차 베지에 곡선이 탄생합니다.
+        </p>
+      </div>
+
     </div>
   </main>
 
@@ -1104,6 +1203,567 @@
     fSlider.addEventListener('input', (e) => {
       numCircles = parseInt(e.target.value); circleBadge.textContent = `조화 원: ${numCircles}개`; wavePoints = [];
     });
+
+    /* =====================================================================
+     * 8. BRACHISTOCHRONE (CYCLOID VS STRAIGHT LINE VS STEEP CURVE)
+     * ===================================================================== */
+    const brachCanvas = document.getElementById('brachCanvas');
+    const brachCtx = brachCanvas.getContext('2d');
+    const brachBadge = document.getElementById('brachBadge');
+    const brachStartBtn = document.getElementById('brachStartBtn');
+    const brachLoopBtn = document.getElementById('brachLoopBtn');
+
+    const bx0 = 45, by0 = 40, bx1 = 455, by1 = 235;
+    const bDx = bx1 - bx0, bDy = by1 - by0;
+
+    // Solve cycloid parameters: x = R(theta - sin(theta)), y = R(1 - cos(theta))
+    let cycThetaMax = Math.PI * 1.38, cycR = bDy / (1 - Math.cos(cycThetaMax));
+    for (let iter = 0; iter < 40; iter++) {
+      const f = (cycThetaMax - Math.sin(cycThetaMax)) / (1 - Math.cos(cycThetaMax)) - (bDx / bDy);
+      const df = ((1 - Math.cos(cycThetaMax))*(1 - Math.cos(cycThetaMax)) - (cycThetaMax - Math.sin(cycThetaMax))*Math.sin(cycThetaMax)) / Math.pow(1 - Math.cos(cycThetaMax), 2);
+      cycThetaMax -= f / df;
+    }
+    cycR = bDy / (1 - Math.cos(cycThetaMax));
+
+    function buildTrackSamples(curveFn, N = 350) {
+      const pts = [];
+      let totalTime = 0;
+      const g = 980; // pixel gravity
+      for (let i = 0; i <= N; i++) {
+        const u = i / N;
+        const p = curveFn(u);
+        if (i === 0) {
+          pts.push({ x: p.x, y: p.y, t: 0 });
+        } else {
+          const prev = pts[i - 1];
+          const ds = Math.hypot(p.x - prev.x, p.y - prev.y);
+          const dy1 = Math.max(0.5, prev.y - by0);
+          const dy2 = Math.max(0.5, p.y - by0);
+          const vAvg = 0.5 * (Math.sqrt(2 * g * dy1) + Math.sqrt(2 * g * dy2));
+          totalTime += ds / vAvg;
+          pts.push({ x: p.x, y: p.y, t: totalTime });
+        }
+      }
+      return { pts, totalTime };
+    }
+
+    const trackCycloid = buildTrackSamples(u => {
+      const th = u * cycThetaMax;
+      return { x: bx0 + cycR * (th - Math.sin(th)), y: by0 + cycR * (1 - Math.cos(th)) };
+    });
+    const trackLine = buildTrackSamples(u => ({
+      x: bx0 + bDx * u, y: by0 + bDy * u
+    }));
+    const trackSteep = buildTrackSamples(u => ({
+      x: bx0 + bDx * u, y: by0 + bDy * (1 - Math.pow(1 - u, 3.2))
+    }));
+
+    let brachElapsed = 0, brachLoop = true, brachWait = 0;
+
+    function posAtTime(track, t) {
+      if (t >= track.totalTime) return track.pts[track.pts.length - 1];
+      let lo = 0, hi = track.pts.length - 1;
+      while (lo < hi) {
+        const mid = (lo + hi) >> 1;
+        if (track.pts[mid].t < t) lo = mid + 1; else hi = mid;
+      }
+      return track.pts[lo];
+    }
+
+    brachStartBtn.addEventListener('click', () => { brachElapsed = 0; brachWait = 0; });
+    brachLoopBtn.addEventListener('click', () => {
+      brachLoop = !brachLoop;
+      brachLoopBtn.textContent = brachLoop ? '🔄 연속 경주: ON' : '🔄 연속 경주: OFF';
+    });
+
+    function drawBrach() {
+      const w = brachCanvas.width, h = brachCanvas.height;
+      brachCtx.clearRect(0, 0, w, h);
+
+      const tracks = [
+        { name: '사이클로이드 (최속)', data: trackCycloid, color: '#38bdf8', rank: '🥇 1위' },
+        { name: '급경사 포물선', data: trackSteep, color: '#10b981', rank: '🥈 2위' },
+        { name: '직선 (최단거리)', data: trackLine, color: '#f59e0b', rank: '🥉 3위' }
+      ];
+
+      // Start & Finish markers
+      brachCtx.strokeStyle = 'rgba(255,255,255,0.18)';
+      brachCtx.setLineDash([4, 4]);
+      brachCtx.beginPath(); brachCtx.moveTo(bx1, by0); brachCtx.lineTo(bx1, by1 + 25); brachCtx.stroke();
+      brachCtx.setLineDash([]);
+
+      tracks.forEach(tr => {
+        brachCtx.beginPath();
+        tr.data.pts.forEach((p, idx) => { if (idx === 0) brachCtx.moveTo(p.x, p.y); else brachCtx.lineTo(p.x, p.y); });
+        brachCtx.strokeStyle = tr.color + '88';
+        brachCtx.lineWidth = 2.2;
+        brachCtx.stroke();
+      });
+
+      tracks.forEach((tr, idx) => {
+        const pos = posAtTime(tr.data, brachElapsed);
+        brachCtx.beginPath();
+        brachCtx.arc(pos.x, pos.y, 7, 0, Math.PI * 2);
+        brachCtx.fillStyle = tr.color;
+        brachCtx.fill();
+        brachCtx.strokeStyle = '#fff';
+        brachCtx.lineWidth = 1.5;
+        brachCtx.stroke();
+
+        const finished = brachElapsed >= tr.data.totalTime;
+        brachCtx.fillStyle = tr.color;
+        brachCtx.font = 'bold 11px sans-serif';
+        brachCtx.textAlign = 'left';
+        brachCtx.fillText(`${tr.rank} ${tr.name}: ${(tr.data.totalTime).toFixed(2)}s ${finished ? '✓ 도착!' : ''}`, 22, h - 48 + idx * 16);
+      });
+
+      const maxT = Math.max(trackCycloid.totalTime, trackLine.totalTime, trackSteep.totalTime);
+      if (brachElapsed < maxT) {
+        brachElapsed += 0.014;
+      } else if (brachLoop) {
+        brachWait++;
+        if (brachWait > 65) { brachElapsed = 0; brachWait = 0; }
+      }
+      brachBadge.textContent = `사이클로이드 ${(trackCycloid.totalTime).toFixed(2)}s vs 직선 ${(trackLine.totalTime).toFixed(2)}s`;
+      requestAnimationFrame(drawBrach);
+    }
+    drawBrach();
+
+    /* =====================================================================
+     * 9. MONTY HALL PARADOX SIMULATOR
+     * ===================================================================== */
+    const montyCanvas = document.getElementById('montyCanvas');
+    const montyCtx = montyCanvas.getContext('2d');
+    const montyBadge = document.getElementById('montyBadge');
+    let switchTrials = 0, switchWins = 0, stayTrials = 0, stayWins = 0;
+    let lastDoors = [false, true, false], lastPick = 0, lastOpened = 2, lastSwitched = 1;
+    let isMontyAuto = false;
+
+    function runMontyStep() {
+      const car = Math.floor(Math.random() * 3);
+      const pick = Math.floor(Math.random() * 3);
+      let openCandidates = [0, 1, 2].filter(d => d !== car && d !== pick);
+      const opened = openCandidates[Math.floor(Math.random() * openCandidates.length)];
+      const switched = [0, 1, 2].find(d => d !== pick && d !== opened);
+
+      lastDoors = [0, 1, 2].map(d => d === car);
+      lastPick = pick; lastOpened = opened; lastSwitched = switched;
+
+      switchTrials++; if (switched === car) switchWins++;
+      stayTrials++; if (pick === car) stayWins++;
+      drawMonty();
+    }
+
+    function drawMonty() {
+      const w = montyCanvas.width, h = montyCanvas.height;
+      montyCtx.clearRect(0, 0, w, h);
+
+      // Draw 3 doors at top
+      const doorW = 74, doorH = 105, startX = 78, gap = 45, topY = 26;
+      for (let i = 0; i < 3; i++) {
+        const dx = startX + i * (doorW + gap);
+        const isCar = lastDoors[i];
+        const isOpened = i === lastOpened;
+        const isSwitched = i === lastSwitched;
+
+        montyCtx.fillStyle = isOpened ? 'rgba(244, 63, 94, 0.14)' : (isSwitched ? 'rgba(56, 189, 248, 0.18)' : 'rgba(255,255,255,0.05)');
+        montyCtx.strokeStyle = isSwitched ? '#38bdf8' : (isOpened ? '#f43f5e' : 'rgba(255,255,255,0.25)');
+        montyCtx.lineWidth = isSwitched ? 2.5 : 1.5;
+        montyCtx.fillRect(dx, topY, doorW, doorH);
+        montyCtx.strokeRect(dx, topY, doorW, doorH);
+
+        montyCtx.fillStyle = '#fff';
+        montyCtx.font = 'bold 12px sans-serif';
+        montyCtx.textAlign = 'center';
+        montyCtx.fillText(`문 ${i + 1}`, dx + doorW / 2, topY + 20);
+
+        montyCtx.font = '24px sans-serif';
+        montyCtx.fillText(isCar ? '🏎️' : '🐐', dx + doorW / 2, topY + 62);
+
+        montyCtx.font = '10px sans-serif';
+        let tag = i === lastPick ? '초기 선택' : (isOpened ? '사회자 공개(염소)' : '변경 선택');
+        montyCtx.fillStyle = isSwitched ? '#38bdf8' : (isOpened ? '#fb7185' : '#f59e0b');
+        montyCtx.fillText(tag, dx + doorW / 2, topY + 92);
+      }
+
+      // Probability comparison bars
+      const swRate = switchTrials ? ((switchWins / switchTrials) * 100) : 66.7;
+      const stRate = stayTrials ? ((stayWins / stayTrials) * 100) : 33.3;
+      const barLeft = 135, barMaxW = 285;
+
+      // Switch Bar
+      montyCtx.fillStyle = '#38bdf8';
+      montyCtx.font = 'bold 12px sans-serif';
+      montyCtx.textAlign = 'left';
+      montyCtx.fillText('선택 변경 (Switch)', 18, 185);
+      montyCtx.fillStyle = 'rgba(255,255,255,0.08)';
+      montyCtx.fillRect(barLeft, 171, barMaxW, 20);
+      montyCtx.fillStyle = '#38bdf8';
+      montyCtx.fillRect(barLeft, 171, (swRate / 100) * barMaxW, 20);
+      montyCtx.fillStyle = '#fff';
+      montyCtx.fillText(`${swRate.toFixed(1)}% (${switchWins}/${switchTrials}) → 이론값 66.7%`, barLeft + 8, 185);
+
+      // Stay Bar
+      montyCtx.fillStyle = '#f59e0b';
+      montyCtx.fillText('선택 유지 (Stay)', 18, 225);
+      montyCtx.fillStyle = 'rgba(255,255,255,0.08)';
+      montyCtx.fillRect(barLeft, 211, barMaxW, 20);
+      montyCtx.fillStyle = '#f59e0b';
+      montyCtx.fillRect(barLeft, 211, (stRate / 100) * barMaxW, 20);
+      montyCtx.fillStyle = '#fff';
+      montyCtx.fillText(`${stRate.toFixed(1)}% (${stayWins}/${stayTrials}) → 이론값 33.3%`, barLeft + 8, 225);
+
+      montyCtx.fillStyle = '#94a3b8';
+      montyCtx.font = '11px sans-serif';
+      montyCtx.textAlign = 'center';
+      montyCtx.fillText(`총 실험 횟수: ${switchTrials}회 | 화면 클릭 시 1회 실험, 버튼으로 100회 고속 검증`, w / 2, h - 18);
+      montyBadge.textContent = `변경 승률: ${swRate.toFixed(1)}% vs 유지: ${stRate.toFixed(1)}%`;
+    }
+
+    montyCanvas.addEventListener('click', runMontyStep);
+    document.getElementById('montySim100Btn').addEventListener('click', () => {
+      for (let i = 0; i < 100; i++) runMontyStep();
+    });
+    document.getElementById('montyAutoBtn').addEventListener('click', (e) => {
+      isMontyAuto = !isMontyAuto;
+      e.target.textContent = isMontyAuto ? '⏸ 정지' : '▶ 연속 시뮬레이션';
+    });
+    document.getElementById('montyResetBtn').addEventListener('click', () => {
+      switchTrials = 0; switchWins = 0; stayTrials = 0; stayWins = 0; drawMonty();
+    });
+    for (let i = 0; i < 30; i++) runMontyStep();
+    setInterval(() => { if (isMontyAuto) runMontyStep(); }, 60);
+
+    /* =====================================================================
+     * 10. FRACTAL & SELF-SIMILARITY (FRACTAL TREE & SIERPINSKI)
+     * ===================================================================== */
+    const fractalCanvas = document.getElementById('fractalCanvas');
+    const fractalCtx = fractalCanvas.getContext('2d');
+    const fractalBadge = document.getElementById('fractalBadge');
+    const fractalDepthSlider = document.getElementById('fractalDepthSlider');
+    const fractalAngleSlider = document.getElementById('fractalAngleSlider');
+    const fractalModeBtn = document.getElementById('fractalModeBtn');
+    const fractalAnimBtn = document.getElementById('fractalAnimBtn');
+
+    let fracDepth = 8, fracAngleDeg = 26, fractalMode = 'tree', isFractalAnim = false, fracPhase = 0;
+
+    function drawTreeBranch(x, y, len, angle, depth) {
+      if (depth === 0) return;
+      const x2 = x + len * Math.cos(angle);
+      const y2 = y + len * Math.sin(angle);
+      fractalCtx.beginPath();
+      fractalCtx.moveTo(x, y);
+      fractalCtx.lineTo(x2, y2);
+      fractalCtx.strokeStyle = depth <= 2 ? '#10b981' : (depth <= 4 ? '#38bdf8' : '#cbd5e1');
+      fractalCtx.lineWidth = Math.max(1, depth * 0.75);
+      fractalCtx.stroke();
+
+      const rad = (fracAngleDeg * Math.PI) / 180;
+      drawTreeBranch(x2, y2, len * 0.72, angle - rad, depth - 1);
+      drawTreeBranch(x2, y2, len * 0.72, angle + rad, depth - 1);
+    }
+
+    function drawSierpinski(x1, y1, x2, y2, x3, y3, depth) {
+      if (depth <= 1) {
+        fractalCtx.beginPath();
+        fractalCtx.moveTo(x1, y1); fractalCtx.lineTo(x2, y2); fractalCtx.lineTo(x3, y3);
+        fractalCtx.closePath();
+        fractalCtx.fillStyle = 'rgba(56, 189, 248, 0.45)';
+        fractalCtx.strokeStyle = '#38bdf8';
+        fractalCtx.lineWidth = 1;
+        fractalCtx.fill(); fractalCtx.stroke();
+        return;
+      }
+      const mx12 = (x1 + x2) / 2, my12 = (y1 + y2) / 2;
+      const mx23 = (x2 + x3) / 2, my23 = (y2 + y3) / 2;
+      const mx31 = (x3 + x1) / 2, my31 = (y3 + y1) / 2;
+      drawSierpinski(x1, y1, mx12, my12, mx31, my31, depth - 1);
+      drawSierpinski(mx12, my12, x2, y2, mx23, my23, depth - 1);
+      drawSierpinski(mx31, my31, mx23, my23, x3, y3, depth - 1);
+    }
+
+    function drawFractal() {
+      const w = fractalCanvas.width, h = fractalCanvas.height;
+      fractalCtx.clearRect(0, 0, w, h);
+      fractalBadge.textContent = `세대: ${fracDepth} | 각도: ${Math.round(fracAngleDeg)}°`;
+
+      if (fractalMode === 'tree') {
+        drawTreeBranch(w / 2, h - 18, 68, -Math.PI / 2, fracDepth);
+      } else {
+        const sDepth = Math.min(7, fracDepth);
+        const size = 240;
+        const cx = w / 2, topY = 25, botY = topY + size * Math.sin(Math.PI / 3);
+        drawSierpinski(cx, topY, cx - size / 2, botY, cx + size / 2, botY, sDepth);
+      }
+    }
+
+    fractalDepthSlider.addEventListener('input', (e) => { fracDepth = parseInt(e.target.value); drawFractal(); });
+    fractalAngleSlider.addEventListener('input', (e) => { fracAngleDeg = parseFloat(e.target.value); drawFractal(); });
+    fractalModeBtn.addEventListener('click', () => {
+      fractalMode = fractalMode === 'tree' ? 'sierpinski' : 'tree';
+      fractalModeBtn.textContent = fractalMode === 'tree' ? '모드: 🌳 트리' : '모드: 🔺 시어핀스키';
+      drawFractal();
+    });
+    fractalAnimBtn.addEventListener('click', () => {
+      isFractalAnim = !isFractalAnim;
+      fractalAnimBtn.textContent = isFractalAnim ? '⏸ 정지' : '▶ 호흡';
+      if (isFractalAnim) {
+        function animLoop() {
+          if (!isFractalAnim) return;
+          fracPhase += 0.04;
+          fracAngleDeg = 28 + Math.sin(fracPhase) * 14;
+          fractalAngleSlider.value = Math.round(fracAngleDeg);
+          drawFractal();
+          requestAnimationFrame(animLoop);
+        }
+        requestAnimationFrame(animLoop);
+      }
+    });
+    drawFractal();
+
+    /* =====================================================================
+     * 11. MONTE CARLO PI ESTIMATION
+     * ===================================================================== */
+    const monteCanvas = document.getElementById('monteCanvas');
+    const monteCtx = monteCanvas.getContext('2d');
+    const monteBadge = document.getElementById('monteBadge');
+    let monteTotal = 0, monteInside = 0, isMonteStreaming = true;
+    const sqSize = 230, sqX = 35, sqY = 35, mcR = sqSize / 2;
+
+    function resetMonte() {
+      monteTotal = 0; monteInside = 0;
+      monteCtx.clearRect(0, 0, monteCanvas.width, monteCanvas.height);
+      drawMonteOverlay();
+    }
+
+    function drawMonteOverlay() {
+      const w = monteCanvas.width, h = monteCanvas.height;
+      // Square & Circle boundary
+      monteCtx.strokeStyle = 'rgba(255,255,255,0.35)';
+      monteCtx.lineWidth = 1.5;
+      monteCtx.strokeRect(sqX, sqY, sqSize, sqSize);
+      monteCtx.beginPath();
+      monteCtx.arc(sqX + mcR, sqY + mcR, mcR, 0, Math.PI * 2);
+      monteCtx.strokeStyle = '#38bdf8';
+      monteCtx.lineWidth = 2;
+      monteCtx.stroke();
+
+      // Right side dashboard panel
+      monteCtx.clearRect(285, 0, w - 285, h);
+      const piEst = monteTotal > 0 ? (4 * (monteInside / monteTotal)) : 0;
+      const err = monteTotal > 0 ? Math.abs(Math.PI - piEst) : 0;
+
+      monteCtx.fillStyle = '#f8fafc';
+      monteCtx.font = 'bold 13px sans-serif';
+      monteCtx.textAlign = 'left';
+      monteCtx.fillText('몬테카를로 적분 추정', 295, 55);
+
+      monteCtx.font = '12px sans-serif';
+      monteCtx.fillStyle = '#38bdf8';
+      monteCtx.fillText(`● 원 내부: ${monteInside.toLocaleString()}개`, 295, 90);
+      monteCtx.fillStyle = '#f59e0b';
+      monteCtx.fillText(`● 원 외부: ${(monteTotal - monteInside).toLocaleString()}개`, 295, 114);
+      monteCtx.fillStyle = '#cbd5e1';
+      monteCtx.fillText(`● 총 표본: ${monteTotal.toLocaleString()}개`, 295, 138);
+
+      monteCtx.fillStyle = '#fef08a';
+      monteCtx.font = 'bold 16px sans-serif';
+      monteCtx.fillText(`추정 π ≈ ${piEst.toFixed(5)}`, 295, 182);
+      monteCtx.fillStyle = '#94a3b8';
+      monteCtx.font = '11px sans-serif';
+      monteCtx.fillText(`실제 π = 3.14159`, 295, 204);
+      monteCtx.fillText(`오차: ${err.toFixed(5)}`, 295, 224);
+
+      monteBadge.textContent = `π ≈ ${piEst.toFixed(4)} (${monteTotal.toLocaleString()}점)`;
+    }
+
+    function dropMontePoints(count) {
+      for (let i = 0; i < count; i++) {
+        const rx = Math.random() * 2 - 1;
+        const ry = Math.random() * 2 - 1;
+        const inside = (rx * rx + ry * ry) <= 1;
+        monteTotal++;
+        if (inside) monteInside++;
+
+        const px = sqX + (rx + 1) * mcR;
+        const py = sqY + (ry + 1) * mcR;
+        monteCtx.fillStyle = inside ? 'rgba(56, 189, 248, 0.75)' : 'rgba(245, 158, 11, 0.65)';
+        monteCtx.fillRect(px, py, 2, 2);
+      }
+      drawMonteOverlay();
+    }
+
+    document.getElementById('monteDropBtn').addEventListener('click', () => dropMontePoints(300));
+    document.getElementById('monteStreamBtn').addEventListener('click', (e) => {
+      isMonteStreaming = !isMonteStreaming;
+      e.target.textContent = isMonteStreaming ? '⚡ 연속 폭우: ON' : '⚡ 연속 폭우: OFF';
+    });
+    document.getElementById('monteResetBtn').addEventListener('click', resetMonte);
+
+    resetMonte();
+    function monteLoop() {
+      if (isMonteStreaming && monteTotal < 25000) dropMontePoints(15);
+      requestAnimationFrame(monteLoop);
+    }
+    monteLoop();
+
+    /* =====================================================================
+     * 12. BEZIER CURVE & DE CASTELJAU ALGORITHM
+     * ===================================================================== */
+    const bezierCanvas = document.getElementById('bezierCanvas');
+    const bezierCtx = bezierCanvas.getContext('2d');
+    const bezierBadge = document.getElementById('bezierBadge');
+    const bezierSlider = document.getElementById('bezierSlider');
+    const bezierAutoBtn = document.getElementById('bezierAutoBtn');
+
+    const bPts = [
+      { x: 55, y: 245, label: 'P0' },
+      { x: 115, y: 45, label: 'P1' },
+      { x: 375, y: 45, label: 'P2' },
+      { x: 445, y: 245, label: 'P3' }
+    ];
+    let bezierT = 0.5, isBezierAuto = true, bezierDir = 1, draggedBezierPt = null;
+
+    function lerpPt(a, b, t) {
+      return { x: a.x + (b.x - a.x) * t, y: a.y + (b.y - a.y) * t };
+    }
+
+    function getCanvasMouse(canvas, clientX, clientY) {
+      const r = canvas.getBoundingClientRect();
+      return {
+        x: (clientX - r.left) * (canvas.width / r.width),
+        y: (clientY - r.top) * (canvas.height / r.height)
+      };
+    }
+
+    bezierCanvas.addEventListener('mousedown', (e) => {
+      const m = getCanvasMouse(bezierCanvas, e.clientX, e.clientY);
+      draggedBezierPt = bPts.find(p => Math.hypot(p.x - m.x, p.y - m.y) < 18) || null;
+    });
+    window.addEventListener('mouseup', () => { draggedBezierPt = null; });
+    window.addEventListener('mousemove', (e) => {
+      if (!draggedBezierPt) return;
+      const m = getCanvasMouse(bezierCanvas, e.clientX, e.clientY);
+      draggedBezierPt.x = Math.max(20, Math.min(bezierCanvas.width - 20, m.x));
+      draggedBezierPt.y = Math.max(20, Math.min(bezierCanvas.height - 20, m.y));
+    });
+
+    bezierCanvas.addEventListener('touchstart', (e) => {
+      if (e.touches.length === 1) {
+        const m = getCanvasMouse(bezierCanvas, e.touches[0].clientX, e.touches[0].clientY);
+        draggedBezierPt = bPts.find(p => Math.hypot(p.x - m.x, p.y - m.y) < 24) || null;
+      }
+    }, { passive: true });
+    window.addEventListener('touchend', () => { draggedBezierPt = null; });
+    window.addEventListener('touchmove', (e) => {
+      if (!draggedBezierPt || e.touches.length !== 1) return;
+      const m = getCanvasMouse(bezierCanvas, e.touches[0].clientX, e.touches[0].clientY);
+      draggedBezierPt.x = Math.max(20, Math.min(bezierCanvas.width - 20, m.x));
+      draggedBezierPt.y = Math.max(20, Math.min(bezierCanvas.height - 20, m.y));
+    }, { passive: true });
+
+    bezierSlider.addEventListener('input', (e) => {
+      bezierT = parseInt(e.target.value) / 100;
+      bezierBadge.textContent = `t = ${bezierT.toFixed(2)}`;
+    });
+    bezierAutoBtn.addEventListener('click', () => {
+      isBezierAuto = !isBezierAuto;
+      bezierAutoBtn.textContent = isBezierAuto ? '⏸ 정지' : '▶ 자동 주행';
+    });
+
+    function drawBezier() {
+      const w = bezierCanvas.width, h = bezierCanvas.height;
+      bezierCtx.clearRect(0, 0, w, h);
+
+      if (isBezierAuto) {
+        bezierT += 0.006 * bezierDir;
+        if (bezierT >= 1) { bezierT = 1; bezierDir = -1; }
+        else if (bezierT <= 0) { bezierT = 0; bezierDir = 1; }
+        bezierSlider.value = Math.round(bezierT * 100);
+        bezierBadge.textContent = `t = ${bezierT.toFixed(2)}`;
+      }
+
+      // Control polygon
+      bezierCtx.beginPath();
+      bPts.forEach((p, idx) => { if (idx === 0) bezierCtx.moveTo(p.x, p.y); else bezierCtx.lineTo(p.x, p.y); });
+      bezierCtx.strokeStyle = 'rgba(255,255,255,0.22)';
+      bezierCtx.lineWidth = 1.5;
+      bezierCtx.stroke();
+
+      // De Casteljau levels
+      const q0 = lerpPt(bPts[0], bPts[1], bezierT);
+      const q1 = lerpPt(bPts[1], bPts[2], bezierT);
+      const q2 = lerpPt(bPts[2], bPts[3], bezierT);
+
+      bezierCtx.beginPath();
+      bezierCtx.moveTo(q0.x, q0.y); bezierCtx.lineTo(q1.x, q1.y); bezierCtx.lineTo(q2.x, q2.y);
+      bezierCtx.strokeStyle = 'rgba(16, 185, 129, 0.65)';
+      bezierCtx.lineWidth = 1.5;
+      bezierCtx.stroke();
+
+      const r0 = lerpPt(q0, q1, bezierT);
+      const r1 = lerpPt(q1, q2, bezierT);
+      bezierCtx.beginPath();
+      bezierCtx.moveTo(r0.x, r0.y); bezierCtx.lineTo(r1.x, r1.y);
+      bezierCtx.strokeStyle = 'rgba(245, 158, 11, 0.85)';
+      bezierCtx.lineWidth = 2;
+      bezierCtx.stroke();
+
+      // Full Bezier Curve up to 1.0 (faint) and up to bezierT (bright)
+      bezierCtx.beginPath();
+      for (let i = 0; i <= 100; i++) {
+        const u = i / 100;
+        const a0 = lerpPt(bPts[0], bPts[1], u), a1 = lerpPt(bPts[1], bPts[2], u), a2 = lerpPt(bPts[2], bPts[3], u);
+        const b0 = lerpPt(a0, a1, u), b1 = lerpPt(a1, a2, u);
+        const c = lerpPt(b0, b1, u);
+        if (i === 0) bezierCtx.moveTo(c.x, c.y); else bezierCtx.lineTo(c.x, c.y);
+      }
+      bezierCtx.strokeStyle = 'rgba(56, 189, 248, 0.22)';
+      bezierCtx.lineWidth = 3;
+      bezierCtx.stroke();
+
+      bezierCtx.beginPath();
+      const maxStep = Math.floor(bezierT * 100);
+      for (let i = 0; i <= maxStep; i++) {
+        const u = i / 100;
+        const a0 = lerpPt(bPts[0], bPts[1], u), a1 = lerpPt(bPts[1], bPts[2], u), a2 = lerpPt(bPts[2], bPts[3], u);
+        const b0 = lerpPt(a0, a1, u), b1 = lerpPt(a1, a2, u);
+        const c = lerpPt(b0, b1, u);
+        if (i === 0) bezierCtx.moveTo(c.x, c.y); else bezierCtx.lineTo(c.x, c.y);
+      }
+      bezierCtx.strokeStyle = '#38bdf8';
+      bezierCtx.lineWidth = 3.2;
+      bezierCtx.stroke();
+
+      // Active curve point
+      const finalPt = lerpPt(r0, r1, bezierT);
+      bezierCtx.beginPath();
+      bezierCtx.arc(finalPt.x, finalPt.y, 6.5, 0, Math.PI * 2);
+      bezierCtx.fillStyle = '#38bdf8';
+      bezierCtx.fill();
+      bezierCtx.strokeStyle = '#fff';
+      bezierCtx.lineWidth = 2;
+      bezierCtx.stroke();
+
+      // Control points P0..P3
+      bPts.forEach(p => {
+        bezierCtx.beginPath();
+        bezierCtx.arc(p.x, p.y, 7, 0, Math.PI * 2);
+        bezierCtx.fillStyle = '#f43f5e';
+        bezierCtx.fill();
+        bezierCtx.strokeStyle = '#fff';
+        bezierCtx.lineWidth = 1.5;
+        bezierCtx.stroke();
+
+        bezierCtx.fillStyle = '#fff';
+        bezierCtx.font = 'bold 11px sans-serif';
+        bezierCtx.textAlign = 'center';
+        bezierCtx.fillText(p.label, p.x, p.y - 12);
+      });
+
+      requestAnimationFrame(drawBezier);
+    }
+    drawBezier();
   </script>
 </body>
 </html>
